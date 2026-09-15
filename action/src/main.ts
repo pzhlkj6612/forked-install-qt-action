@@ -9,7 +9,7 @@ import * as core from "@actions/core";
 import { exec, getExecOutput } from "@actions/exec";
 
 import * as glob from "glob";
-import { compare, CompareOperator } from "compare-versions";
+import { compare, CompareOperator, satisfies } from "compare-versions";
 import "source-map-support/register.js";
 
 const compareVersions = (v1: string, op: CompareOperator, v2: string): boolean => {
@@ -227,9 +227,41 @@ const resolveInputs = async (): Promise<{ inputs: Inputs; cacheKey: string }> =>
     }
   }
 
+  const target = ((): "android" | "desktop" | "ios" | "wasm" => {
+    // Make sure target is one of the allowed values
+    if (
+      rawInputs.target === "desktop" ||
+      rawInputs.target === "android" ||
+      rawInputs.target === "ios" ||
+      rawInputs.target === "wasm"
+    ) {
+      return rawInputs.target;
+    } else {
+      throw TypeError(
+        `target: "${rawInputs.target}" is not one of "desktop" | "android" | "ios" | "wasm"`
+      );
+    }
+  })();
+
   const host = ((): "windows" | "windows_arm64" | "mac" | "linux" | "linux_arm64" | "all_os" => {
     // Set host automatically if omitted
     if (!rawInputs.host) {
+      if (
+        /*
+          Hack: convert the style of version range to SimpleSpec in python-semanticversion:
+            - Docs:
+              - input: https://python-semanticversion.readthedocs.io/en/latest/reference.html#semantic_version.SimpleSpec
+              - processed: https://docs.npmjs.com/cli/v6/using-npm/semver (supported by omichelsen/compare-versions)
+            - Changes:
+              - Splitting multiple ranges by whitespaces.
+              - Change all "~=" to "~".
+        */
+        satisfies(">=6.7.0", rawInputs.version.replaceAll(",", " ").replaceAll("~=", "~")) &&
+        ["android", "wasm"].includes(target)
+      ) {
+        return "all_os";
+      }
+
       switch (process.platform) {
         case "win32": {
           return process.arch === "arm64" ? "windows_arm64" : "windows";
@@ -257,22 +289,6 @@ const resolveInputs = async (): Promise<{ inputs: Inputs; cacheKey: string }> =>
           `host: "${rawInputs.host}" is not one of "windows" | "windows_arm64" | "mac" | "linux" | "linux_arm64" | "all_os"`
         );
       }
-    }
-  })();
-
-  const target = ((): "android" | "desktop" | "ios" | "wasm" => {
-    // Make sure target is one of the allowed values
-    if (
-      rawInputs.target === "desktop" ||
-      rawInputs.target === "android" ||
-      rawInputs.target === "ios" ||
-      rawInputs.target === "wasm"
-    ) {
-      return rawInputs.target;
-    } else {
-      throw TypeError(
-        `target: "${rawInputs.target}" is not one of "desktop" | "android" | "ios" | "wasm"`
-      );
     }
   })();
 

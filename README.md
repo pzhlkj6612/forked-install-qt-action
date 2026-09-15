@@ -33,9 +33,11 @@ This is the host platform of the Qt version you will be installing. It's unlikel
 For example, if you are building on Linux and targeting desktop, you would set host to `linux`. If you are building on Linux and targeting android, you would set host to `linux` also. The host platform is the platform that your application will build on, not its target platform.
 
 Possible values: `windows`, `windows_arm64`, `mac`, `linux`, `linux_arm64` or `all_os`.  
-`all_os` is used for wasm, and incompatible with `aqtinstall < 3.2.0`.  
+`all_os` is used for WASM and Android since Qt 6.7, and incompatible with `aqtinstall < 3.2.0`.  
 
-Defaults to the current platform it is being run on.  
+Defaults:
+- `all_os` if `target` is `android` or `wasm` and resolved `version` is equals to or newer than 6.7.0.
+- The current platform that is being run on.
 
 
 ### `target`
