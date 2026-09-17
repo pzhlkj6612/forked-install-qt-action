@@ -471,6 +471,8 @@ const resolveInputs = async (): Promise<{ inputs: Inputs; cacheKey: string }> =>
 };
 
 const run = async (): Promise<void> => {
+  compareVersions("foo", ">", "baz");
+
   const { inputs, cacheKey } = await resolveInputs();
 
   // Qt installer assumes basic requirements that are not installed by
