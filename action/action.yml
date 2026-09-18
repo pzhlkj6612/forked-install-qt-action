@@ -105,5 +105,5 @@ outputs:
   qt-host-path:
     description: Absolute path to the host Qt installation directory when required
 runs:
-  using: node24
+  using: node26
   main: lib/main.js
