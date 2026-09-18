@@ -106,4 +106,4 @@ outputs:
     description: Absolute path to the host Qt installation directory when required
 runs:
   using: node24
-  main: lib/main.js
+  main: lib/bootstrap.js
