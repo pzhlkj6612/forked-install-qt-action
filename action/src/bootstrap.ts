@@ -1,5 +1,8 @@
-import { setSourceMapsSupport } from "node:module";
+import { getSourceMapsSupport } from "node:module";
+import process from "node:process";
 
-setSourceMapsSupport(true, { nodeModules: true });
+process.setSourceMapsEnabled(true);
+
+console.error("source-map support:", getSourceMapsSupport());
 
 await import("./main.js");

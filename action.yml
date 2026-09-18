@@ -189,5 +189,3 @@ runs:
       use-official: ${{ inputs.use-official }}
       email: ${{ inputs.email }}
       pw: ${{ inputs.pw }}
-    env:
-      NODE_OPTIONS: --enable-source-maps
