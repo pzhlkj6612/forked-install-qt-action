@@ -666,6 +666,7 @@ const run = async (): Promise<void> => {
 void run()
   .catch((err) => {
     if (err instanceof Error) {
+      console.error(err.stack);
       core.setFailed(err.stack ?? err);
     } else {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
