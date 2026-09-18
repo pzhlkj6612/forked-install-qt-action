@@ -1,3 +1,7 @@
+import { setSourceMapsSupport } from "node:module";
+
+setSourceMapsSupport(true, { nodeModules: true });
+
 import * as crypto from "crypto";
 import * as fs from "fs";
 import * as os from "os";
@@ -10,6 +14,8 @@ import { exec, getExecOutput } from "@actions/exec";
 
 import * as glob from "glob";
 import { compare, CompareOperator } from "compare-versions";
+
+console.log("process.version", process.version);
 
 const compareVersions = (v1: string, op: CompareOperator, v2: string): boolean => {
   return compare(v1, v2, op);

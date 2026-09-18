@@ -88,5 +88,5 @@ inputs:
     default: ''
     description: Your Qt password
 runs:
-  using: node24
+  using: node26
   main: lib/main.js
