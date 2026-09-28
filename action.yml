@@ -103,6 +103,9 @@ outputs:
   arch:
     description: Architecture or build variant of the installed Qt
     value: ${{ steps.aqtinstall.outputs.arch }}
+  qt-root-dir:
+    description: Absolute path to the root directory of the installed Qt
+    value: ${{ steps.aqtinstall.outputs.qt-root-dir }}
 runs:
   using: "composite"
   steps:

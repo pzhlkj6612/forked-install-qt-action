@@ -313,6 +313,9 @@ Exact version of the installed Qt. No SimpleSpec.
 ### `arch`
 Architecture or build variant of the installed Qt.
 
+### `qt-root-dir`
+Absolute path to the root directory of the installed Qt. Directories such as "bin", "include", "lib", "libexec", "mkspecs" are located in the directory.
+
 ## Example with more arguments
 
 ```yml
@@ -347,9 +350,12 @@ Architecture or build variant of the installed Qt.
         QT_TARGET: ${{ steps.install-qt.outputs.target }}
         QT_ARCH:   ${{ steps.install-qt.outputs.arch }}
         QT_HOST:   ${{ steps.install-qt.outputs.host }}
+
+        # See also the auto set environment variable "QT_ROOT_DIR"
+        ROOT_DIR:   ${{ steps.install-qt.outputs.qt-root-dir }}
       run: |
-        echo "Qt $QT_VER ($QT_TARGET/$QT_ARCH on $QT_HOST) has been installed in '$QT_ROOT_DIR':"
-        ls "$QT_ROOT_DIR"
+        echo "Qt $QT_VER ($QT_TARGET/$QT_ARCH on $QT_HOST) has been installed in '$ROOT_DIR':"
+        ls "$ROOT_DIR"
 ```
 
 ## More info

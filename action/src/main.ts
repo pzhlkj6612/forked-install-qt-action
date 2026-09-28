@@ -780,7 +780,7 @@ const run = async (): Promise<void> => {
     core.setOutput("version", inputs.version);
     core.setOutput("arch", inputs.arch);
     // - Calculated values
-    core.setOutput("qtPath", qtPath);
+    core.setOutput("qt-root-dir", qtPath);
 
     // Set env variables
     if (inputs.setEnv) {

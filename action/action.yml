@@ -96,6 +96,8 @@ outputs:
     description: Exact version of the installed Qt
   arch:
     description: Architecture or build variant of the installed Qt
+  qt-root-dir:
+    description: Absolute path to the root directory of the installed Qt
 runs:
   using: node24
   main: lib/main.js
